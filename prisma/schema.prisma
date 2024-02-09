@@ -21,6 +21,8 @@ model User {
   updatedAt      DateTime @updatedAt
   following      Follow[] @relation(name: "Following")
   followedBy     Follow[] @relation(name: "FollowedBy")
+  blocking       Block[]  @relation(name: "Blocking")
+  blockedby      Block[]  @relation(name: "BlockedBy")
 }
 
 model Follow {
@@ -36,4 +38,17 @@ model Follow {
   @@unique([followerId, followingId])
   @@index([followerId])
   @@index([followingId])
+}
+
+model Block {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  blockerId String @db.ObjectId
+  blockedId String @db.ObjectId
+
+  blocker User @relation(name: "Blocking", fields: [blockerId], references: [id])
+  blocked User @relation(name: "BlockedBy", fields: [blockedId], references: [id])
+
+  @@unique([blockerId, blockedId])
+  @@index([blockerId])
+  @@index([blockedId])
 }

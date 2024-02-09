@@ -35,9 +35,21 @@ export const getRecommended = async () => {
       },
     });
 
-    const followingIds = following.map((f) => f.followingId);
+    const blocked = await db.block.findMany({
+      where: {
+        blockerId: userId,
+      },
+      select: {
+        blockedId: true,
+      },
+    });
 
-    users = users.filter((u) => !followingIds.includes(u.id));
+    const followingIds = following.map((f) => f.followingId);
+    const blockedIds = blocked.map((b) => b.blockedId);
+
+    users = users.filter(
+      (u) => !followingIds.includes(u.id) && !blockedIds.includes(u.id)
+    );
   } else {
     users = await db.user.findMany({
       orderBy: [
