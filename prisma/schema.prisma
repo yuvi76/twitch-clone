@@ -23,6 +23,7 @@ model User {
   followedBy     Follow[] @relation(name: "FollowedBy")
   blocking       Block[]  @relation(name: "Blocking")
   blockedby      Block[]  @relation(name: "BlockedBy")
+  stream         Stream?
 }
 
 model Follow {
@@ -51,4 +52,23 @@ model Block {
   @@unique([blockerId, blockedId])
   @@index([blockerId])
   @@index([blockedId])
+}
+
+model Stream {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  title               String
+  thumbnail           String?
+  ingressId           String?
+  serverUrl           String?
+  streamKey           String?  
+  isLive              Boolean  @default(false)
+  isChatEnabled       Boolean  @default(true)
+  isChatDelayed       Boolean  @default(false)
+  isChatFollowersOnly Boolean  @default(false)
+  userId              String   @unique @db.ObjectId
+  user                User     @relation(fields: [userId], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([ingressId])
 }

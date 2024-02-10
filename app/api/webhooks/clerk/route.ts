@@ -60,6 +60,11 @@ export async function POST(req: Request) {
         email: payload.data.email_addresses[0].email_address,
         username: payload.data.username,
         imageUrl: payload.data.image_url,
+        stream: {
+          create: {
+            title: `${payload.data.username}'s stream`,
+          },
+        },
       },
     });
   }
