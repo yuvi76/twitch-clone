@@ -58,9 +58,9 @@ model Stream {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
   title               String
   thumbnail           String?
-  ingressId           String?
+  ingressId           String?  @unique
   serverUrl           String?
-  streamKey           String?  
+  streamKey           String?
   isLive              Boolean  @default(false)
   isChatEnabled       Boolean  @default(true)
   isChatDelayed       Boolean  @default(false)
@@ -69,6 +69,4 @@ model Stream {
   user                User     @relation(fields: [userId], references: [id])
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
-
-  @@index([ingressId])
 }
