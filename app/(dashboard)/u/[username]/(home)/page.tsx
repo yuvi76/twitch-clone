@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
+
 import { getUserByUsername } from "@/lib/user-service";
 import { StreamPlayer } from "@/components/stream-player";
 
@@ -15,8 +16,9 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
   if (!user || user.externalUserId !== externalUser?.id || !user.stream) {
     throw new Error("Unauthorized");
   }
+
   return (
-    <div>
+    <div className="h-full">
       <StreamPlayer user={user} stream={user.stream} isFollowing />
     </div>
   );
