@@ -1,13 +1,16 @@
 "use client";
+
+import { Stream, User } from "@prisma/client";
+import { LiveKitRoom } from "@livekit/components-react";
 import { cn } from "@/lib/utils";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { useViewerToken } from "@/hooks/use-viewer-token";
-import { Stream, User } from "@prisma/client";
-import { ChatToggle, LiveKitRoom } from "@livekit/components-react";
+import { InfoCard } from "./info-card";
+import { AboutCard } from "./about-card";
+import { ChatToggle } from "./chat-toggle";
 import { Chat, ChatSkeleton } from "./chat";
 import { Video, VideoSkeleton } from "./video";
 import { Header, HeaderSkeleton } from "./header";
-import { InfoCard } from "./info-card";
 
 type CustomStream = {
   id: string;
@@ -43,7 +46,7 @@ export const StreamPlayer = ({
   const { collapsed } = useChatSidebar((state) => state);
 
   if (!token || !name || !identity) {
-    return <div>Can not watch stream</div>;
+    return <StreamPlayerSkeleton />;
   }
   return (
     <>
@@ -75,6 +78,13 @@ export const StreamPlayer = ({
             viewerIdentity={identity}
             name={stream.title}
             thumbnailUrl={stream.thumbnail}
+          />
+          <AboutCard
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            bio={user.bio}
+            followedByCount={user._count.followedBy}
           />
         </div>
         <div className={cn("col-span-1", collapsed && "hidden")}>

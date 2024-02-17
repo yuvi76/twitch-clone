@@ -35,7 +35,7 @@ export const Header = ({
   const isLive = !!participant;
   const participantCount = participants.length - 1;
 
-  const hostAsViewer = `host-${hostIdentity}`;
+  const hostAsViewer = `Host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
 
   return (
