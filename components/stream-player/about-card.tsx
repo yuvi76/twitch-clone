@@ -38,9 +38,7 @@ export const AboutCard = ({
           <span className="font-semibold text-primary">{followedByCount}</span>{" "}
           {followedByLabel}
         </div>
-        <p className="text-sm">
-          {bio || "This user has not set a bio yet."}
-        </p>
+        <p className="text-sm">{bio || "This user has not set a bio yet."}</p>
       </div>
     </div>
   );
